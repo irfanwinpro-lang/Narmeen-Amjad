@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winpro | Architecture Employee Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #C5A059;
+            --bg: #0b0e11;
+            --sidebar: #15191e;
+            --card-glass: rgba(25, 30, 38, 0.85);
+            --border: rgba(197, 160, 89, 0.2);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            /* Technical Drawing Background */
+            background-image: 
+                linear-gradient(rgba(11, 14, 17, 0.92), rgba(11, 14, 17, 0.92)),
+                url('https://www.transparenttextures.com/patterns/blueprint.png');
+            color: white;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .winpro-brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+            letter-spacing: 3px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .nav-menu { margin-top: 30px; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            color: #888;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+            margin-bottom: 5px;
+        }
+        .nav-item:hover, .nav-item.active { background: rgba(197, 160, 89, 0.1); color: var(--primary); }
+
+        /* Main Content */
+        .content { margin-left: 280px; padding: 40px; width: calc(100% - 280px); }
+
+        .header { margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .header h1 { margin: 0; font-size: 24px; text-transform: uppercase; border-left: 4px solid var(--primary); padding-left: 15px; }
+
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: var(--card-glass); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+        .stat-card small { color: #666; font-size: 11px; text-transform: uppercase; display: block; }
+        .stat-card div { font-size: 24px; font-weight: bold; color: var(--primary); margin-top: 5px; }
+
+        /* Form Section */
+        .section-box { background: var(--card-glass); padding: 25px; border-radius: 15px; border: 1px solid var(--border); backdrop-filter: blur(10px); margin-bottom: 30px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        
+        input, select { background: #000; border: 1px solid #333; padding: 12px; color: white; border-radius: 6px; outline: none; }
+        input:focus { border-color: var(--primary); }
+
+        .btn-save { background: var(--primary); color: black; font-weight: bold; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .btn-save:hover { background: #fff; box-shadow: 0 0 15px rgba(197, 160, 89, 0.4); }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; padding: 15px; background: rgba(197, 160, 89, 0.05); color: var(--primary); font-size: 13px; letter-spacing: 1px; }
+        td { padding: 15px; border-bottom: 1px solid #222; font-size: 14px; }
+
+        .present-status { color: #4caf50; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .present-status::before { content: ''; width: 8px; height: 8px; background: #4caf50; border-radius: 50%; box-shadow: 0 0 8px #4caf50; }
+
+        .del-btn { color: #444; cursor: pointer; transition: 0.3s; }
+        .del-btn:hover { color: #ff4d4d; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="winpro-brand">WINPRO</div>
+        <div class="nav-menu">
+            <div class="nav-item active"><i class="fas fa-desktop"></i> Dashboard</div>
+            <div class="nav-item"><i class="fas fa-user-check"></i> Attendance</div>
+            <div class="nav-item"><i class="fas fa-map-signs"></i> Site Monitoring</div>
+            <div class="nav-item"><i class="fas fa-copy"></i> Reports</div>
+            <div class="nav-item"><i class="fas fa-sign-out-alt"></i> Exit Portal</div>
+        </div>
+        <div style="margin-top: 180px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid #222;">
+            <small style="color: #555;">Operator:</small><br>
+            <b style="color: #ddd;">Narmeen Amjad</b><br>
+            <small style="color: var(--primary);">Winpro Lead Architect</small>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <div>
+                <h1>Internal Staff Console</h1>
+                <p style="color: #555; margin: 5px 0;">Managing Architecture Teams & Dubai Projects</p>
+            </div>
+            <div style="text-align: right">
+                <div id="clock" style="font-size: 20px; font-weight: bold; color: var(--primary);"></div>
+                <small id="date" style="color: #555;"></small>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card"><small>Employees On-Site</small><div>14 Active</div></div>
+            <div class="stat-card"><small>Office Staff</small><div>06 Members</div></div>
+            <div class="stat-card"><small>Dubai Locations</small><div>09 Active</div></div>
+            <div class="stat-card"><small>Attendance Rate</small><div>94%</div></div>
+        </div>
+
+        <div class="section-box">
+            <h3 style="margin-top: 0; color: var(--primary); font-size: 16px; margin-bottom: 20px;"><i class="fas fa-user-plus"></i> New Assignment Entry</h3>
+            <div class="form-grid">
+                <input id="empName" placeholder="Employee Name">
+                <input id="site" placeholder="Site (e.g. Dubai Marina)">
+                <select id="attendance">
+                    <option value="Present">Present</option>
+                    <option value="Late">Late Entry</option>
+                    <option value="Sick Leave">Sick Leave</option>
+                </select>
+                <input id="remark" placeholder="Work Progress Remark">
+            </div>
+            <button class="btn-save" onclick="saveRecord()">UPDATE CONSOLE</button>
+        </div>
+
+        <div class="section-box" style="padding: 0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>EMPLOYEE</th>
+                        <th>LOCATION</th>
+                        <th>ATTENDANCE</th>
+                        <th>WORK STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="staffTable">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+            document.getElementById('date').innerText = now.toDateString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        const defaultData = [
+            { name: "Rahul Deshmukh", site: "Jumeirah Villa X", status: "Present", remark: "Checking MEP foundations" },
+            { name: "Li Na", site: "Business Bay Tower", status: "Present", remark: "Reviewing interior renders" },
+            { name: "Irfan (Winpro)", site: "Bur Dubai Heritage", status: "Late", remark: "Material procurement meeting" }
+        ];
+
+        let staffData = JSON.parse(localStorage.getItem("winpro_v3")) || defaultData;
+
+        function render() {
+            const table = document.getElementById("staffTable");
+            table.innerHTML = "";
+            staffData.forEach((emp, index) => {
+                table.innerHTML += `
+                    <tr>
+                        <td><b>${emp.name}</b></td>
+                        <td><i class="fas fa-location-arrow" style="font-size: 10px; color: var(--primary);"></i> ${emp.site}</td>
+                        <td class="present-status">${emp.status}</td>
+                        <td style="color: #888; font-style: italic;">${emp.remark}</td>
+                        <td><i class="fas fa-times del-btn" onclick="del(${index})"></i></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function saveRecord() {
+            const name = document.getElementById("empName").value;
+            const site = document.getElementById("site").value;
+            const status = document.getElementById("attendance").value;
+            const remark = document.getElementById("remark").value;
+
+            if(name && site) {
+                staffData.unshift({ name, site, status, remark });
+                localStorage.setItem("winpro_v3", JSON.stringify(staffData));
+                render();
+                document.getElementById("empName").value = "";
+                document.getElementById("site").value = "";
+                document.getElementById("remark").value = "";
+            }
+        }
+
+        function del(i) {
+            if(confirm("Remove this entry?")) {
+                staffData.splice(i, 1);
+                localStorage.setItem("winpro_v3", JSON.stringify(staffData));
+                render();
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
